@@ -19,17 +19,19 @@ public class ClientController {
         Order order1 = ClientService.create(order);
         return String.format("Ваш заказ №%s готовится...", order1.getId());
     }
+
     @GetMapping("/order/status")
     @ResponseBody
-    //проверка статуса заказа по id заказа
     public String getOrderStatus(@RequestParam("id") int id) {
-       return ClientService.getOrderStatus(id);
+        return ClientService.getOrderStatus(id);
     }
+
     @GetMapping("/orders")
     //проверка статуса заказа по id заказа
     public List<Order> getOrders() {
         return ClientService.getOrders();
     }
+
     @GetMapping("/order")
     //проверка статуса заказа по id заказа
     public Order getOrderById(@RequestParam String id) {

@@ -15,10 +15,13 @@ public class Listeners {
     private final ObjectMapper objectMapper = new ObjectMapper();
     @KafkaListener(topics = "completed", groupId = "app123")
     public void msListener(ConsumerRecord<Long,Order> record) throws JsonProcessingException {
+        log.info("");
         String order = String.valueOf(record.value());
         Order order2 = objectMapper.readValue(order,Order.class);
-        ClientService.getOrder(order2.getId()).setStatus("COMPLETED");
-        System.out.println("Заказ готов: " + record.value());
+        Order orderWithNewStat = ClientService.getOrder(order2.getId());
+        ClientService.getOrder(orderWithNewStat.getId()).setStatus("COMPLETED");
+        System.out.println("----------------------------------------");
+        System.out.println("Заказ готов: " + orderWithNewStat);
         System.out.println("----------------------------------------");
     }
 
